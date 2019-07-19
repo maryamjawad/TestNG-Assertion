@@ -5,17 +5,30 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-public class AssertionsExample {
-
+public class ParameterExample {
+    
     WebDriver driver;
     @BeforeClass
-    void setup()
+    @Parameters({"browser","url"})
+
+    void setup(String browser , String app)
     {
-        System.setProperty("webdriver.chrome.driver","E:/chromedriver_win32/chromedriver.exe");
-        driver=new ChromeDriver();
-        driver.get("http://www.northernlightsaid.org");
+        if(browser.equalsIgnoreCase("chrome"))
+        {
+            System.setProperty("webdriver.chrome.driver","E:/chromedriver_win32/chromedriver.exe");
+            driver=new ChromeDriver();
+        }
+        else if (browser.equalsIgnoreCase("opera"))
+        {
+            System.setProperty("webdriver.opera.driver","E:/opera driver/operadriver.exe");
+            driver=new ChromeDriver();
+        }
+
+        driver.get(app);
+
     }
     @Test
     void logoTest()
@@ -32,8 +45,5 @@ public class AssertionsExample {
     void tearDown(){
         driver.quit();
     }
-
-
-
 
 }
